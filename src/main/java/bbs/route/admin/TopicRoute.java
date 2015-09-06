@@ -99,7 +99,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.post("/admin/topic/delete/:tid", (request, response) -> {
+		Blade.get("/admin/topic/delete/:tid", (request, response) -> {
 			User user = adminUser();
 			if(null == user){
 				response.go("/");
