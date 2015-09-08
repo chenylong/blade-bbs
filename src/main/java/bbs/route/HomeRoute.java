@@ -344,7 +344,7 @@ public class HomeRoute implements RouteBase{
 		});
 		
 		Blade.get("/markdown", (request, response) -> {
-			ModelAndView modelAndView = getFrontModelAndView("help");
+			ModelAndView modelAndView = getFrontModelAndView("markdown");
 			return modelAndView;
 		});
 	}
