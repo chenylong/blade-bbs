@@ -3,12 +3,10 @@ package bbs;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
-import jetbrick.template.JetEngine;
-import jetbrick.template.JetGlobalContext;
-import jetbrick.template.resolver.GlobalResolver;
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+
 import bbs.kit.BBSKit;
 import bbs.route.admin.AdminRoute;
 import bbs.route.admin.NodeRoute;
@@ -29,8 +27,9 @@ import blade.render.JetbrickRender;
 import blade.route.Router;
 import blade.servlet.Request;
 import blade.servlet.Response;
-
-import com.alibaba.druid.pool.DruidDataSourceFactory;
+import jetbrick.template.JetEngine;
+import jetbrick.template.JetGlobalContext;
+import jetbrick.template.resolver.GlobalResolver;
 
 public class App extends Bootstrap {
 
@@ -87,7 +86,7 @@ public class App extends Bootstrap {
 	}
 	
 	@Override
-	public void contextInitialized(ServletContext servletContext) {
+	public void contextInitialized() {
 		
 		Constant.IS_INSTALL = BBSKit.isInstall();
 		
