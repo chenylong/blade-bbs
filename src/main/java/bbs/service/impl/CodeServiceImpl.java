@@ -1,10 +1,11 @@
 package bbs.service.impl;
 
+import com.blade.annotation.Component;
+
 import bbs.Constant;
 import bbs.kit.BBSKit;
 import bbs.model.Code;
 import bbs.service.CodeService;
-import blade.annotation.Component;
 import blade.kit.MailKit;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Model;

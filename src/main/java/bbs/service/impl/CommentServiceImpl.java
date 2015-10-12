@@ -4,9 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.blade.annotation.Component;
+
 import bbs.model.Comment;
 import bbs.service.CommentService;
-import blade.annotation.Component;
 import blade.plugin.sql2o.Model;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;

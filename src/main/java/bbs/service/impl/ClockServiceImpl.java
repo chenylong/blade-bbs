@@ -2,11 +2,12 @@ package bbs.service.impl;
 
 import java.util.Date;
 
+import com.blade.annotation.Component;
+import com.blade.annotation.Inject;
+
 import bbs.model.Clock;
 import bbs.service.ClockService;
 import bbs.service.NoticeService;
-import blade.annotation.Component;
-import blade.annotation.Inject;
 import blade.kit.DateKit;
 import blade.plugin.sql2o.Model;
 

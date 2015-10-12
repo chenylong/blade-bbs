@@ -2,12 +2,13 @@ package bbs.route.admin;
 
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.model.User;
 import bbs.route.RouteBase;
 import bbs.service.OptionService;
-import blade.Blade;
-import blade.annotation.Inject;
-import blade.render.ModelAndView;
 
 public class OptionsRoute implements RouteBase {
 
@@ -17,7 +18,9 @@ public class OptionsRoute implements RouteBase {
 	@Override
 	public void run() {
 		
-		Blade.get("/admin/settings/site", (request, response) -> {
+		Blade blade = Blade.me();
+		
+		blade.get("/admin/settings/site", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() != 1){
 				response.go("/signin");
@@ -29,7 +32,7 @@ public class OptionsRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.post("/admin/settings/site", (request, response) -> {
+		blade.post("/admin/settings/site", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");

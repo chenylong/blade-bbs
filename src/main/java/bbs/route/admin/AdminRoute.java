@@ -2,17 +2,18 @@ package bbs.route.admin;
 
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.model.User;
 import bbs.route.RouteBase;
 import bbs.service.NodeService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 /**
  * 后台
@@ -33,7 +34,9 @@ public class AdminRoute implements RouteBase {
 	@Override
 	public void run() {
 		
-		Blade.get("/admin", (request, response) -> {
+		Blade blade = Blade.me();
+		
+		blade.get("/admin", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");
@@ -47,7 +50,7 @@ public class AdminRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.get("/admin/topic", (request, response) -> {
+		blade.get("/admin/topic", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");
@@ -69,7 +72,7 @@ public class AdminRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.get("/admin/topic/verify", (request, response) -> {
+		blade.get("/admin/topic/verify", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");

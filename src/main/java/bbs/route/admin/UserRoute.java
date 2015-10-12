@@ -2,16 +2,17 @@ package bbs.route.admin;
 
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.model.User;
 import bbs.route.RouteBase;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 public class UserRoute implements RouteBase {
 	
@@ -23,9 +24,10 @@ public class UserRoute implements RouteBase {
 	
 	@Override
 	public void run() {
+		Blade blade = Blade.me();
 		
 		// 用户设置
-		Blade.get("/admin/user", (request, response) -> {
+		blade.get("/admin/user", (request, response) -> {
 			User user = adminUser();
 			if(null == user){
 				response.go("/");
@@ -46,7 +48,7 @@ public class UserRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.get("/admin/user/:page", (request, response) -> {
+		blade.get("/admin/user/:page", (request, response) -> {
 			User user = adminUser();
 			if(null == user){
 				response.go("/");
@@ -70,7 +72,7 @@ public class UserRoute implements RouteBase {
 		});
 		
 		
-		Blade.get("/admin/user/edit/:uid", (request, response) -> {
+		blade.get("/admin/user/edit/:uid", (request, response) -> {
 			User adminuser = adminUser();
 			if(null == adminuser){
 				response.go("/");
@@ -84,7 +86,7 @@ public class UserRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.post("/admin/user/edit", (request, response) -> {
+		blade.post("/admin/user/edit", (request, response) -> {
 			User adminuser = adminUser();
 			if(null == adminuser){
 				response.go("/");

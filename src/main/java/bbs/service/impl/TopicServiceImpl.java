@@ -4,12 +4,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.blade.annotation.Component;
+import com.blade.annotation.Inject;
+
 import bbs.Constant;
 import bbs.model.Topic;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.annotation.Component;
-import blade.annotation.Inject;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Model;
 import blade.plugin.sql2o.Page;

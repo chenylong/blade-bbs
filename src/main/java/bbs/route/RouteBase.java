@@ -1,12 +1,13 @@
 package bbs.route;
 
+import com.blade.BladeWebContext;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.kit.BBSKit;
 import bbs.model.User;
-import blade.BladeWebContext;
-import blade.render.ModelAndView;
 
-public interface RouteBase extends blade.route.RouteBase{
+public interface RouteBase extends com.blade.route.RouteBase{
 
 	Integer pageSize = 10;
 	

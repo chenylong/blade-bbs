@@ -4,26 +4,27 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import com.blade.Blade;
+import com.blade.servlet.multipart.FileItem;
+import com.blade.servlet.multipart.ServletFileUpload;
+
 import bbs.Constant;
 import bbs.kit.BBSKit;
 import bbs.kit.ImageKit;
 import bbs.model.User;
-import blade.Blade;
 import blade.kit.DateKit;
 import blade.kit.FileKit;
 import blade.kit.IOKit;
 import blade.kit.StringKit;
 import blade.kit.json.JSONObject;
-import blade.servlet.FileItem;
-import blade.servlet.ServletFileUpload;
 
 public class UploadRoute implements RouteBase {
 
 	@Override
 	public void run() {
-		
+		Blade blade = Blade.me();
 		// 上传文件
-		Blade.all("/files/upload", (request, response) -> {
+		blade.all("/files/upload", (request, response) -> {
 			
 			User user = verifySignin();
 			if(null == user){
@@ -46,7 +47,7 @@ public class UploadRoute implements RouteBase {
 				
 				String saveName = DateKit.dateFormat(new Date(), "yyyyMMddHHmmssSSS")  + "_" + StringKit.getRandomChar(10) + suffix;
 				
-				File file = new File(Blade.webRoot() + File.separator + Constant.UPLOAD_FOLDER + File.separator + saveName);
+				File file = new File(blade.webRoot() + File.separator + Constant.UPLOAD_FOLDER + File.separator + saveName);
 				
 				IOKit.write(fileItem.getFileContent(), file);
 				
@@ -74,7 +75,7 @@ public class UploadRoute implements RouteBase {
 		});
 		
 		// 上传图片
-		Blade.all("/uploadimg", (request, response) -> {
+		blade.all("/uploadimg", (request, response) -> {
 			
 			User user = verifySignin();
 			if(null == user){
@@ -109,9 +110,9 @@ public class UploadRoute implements RouteBase {
 				// 缩略图
 				String normalName = Constant.UPLOAD_FOLDER + "/" + fileName + "_normal" + suffix;
 				
-				String savepath = Blade.webRoot() + File.separator + saveName;
+				String savepath = blade.webRoot() + File.separator + saveName;
 				
-				String normalpath = Blade.webRoot() + File.separator + normalName;
+				String normalpath = blade.webRoot() + File.separator + normalName;
 				
 				File file = new File(savepath);
 				

@@ -2,14 +2,15 @@ package bbs.route.admin;
 
 import java.util.List;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.model.Node;
 import bbs.model.User;
 import bbs.route.RouteBase;
 import bbs.service.NodeService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.StringKit;
-import blade.render.ModelAndView;
 
 
 public class NodeRoute implements RouteBase {
@@ -20,7 +21,9 @@ public class NodeRoute implements RouteBase {
 	@Override
 	public void run() {
 		
-		Blade.get("/admin/node", (request, response) -> {
+		Blade blade = Blade.me();
+		
+		blade.get("/admin/node", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");
@@ -32,7 +35,7 @@ public class NodeRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.get("/admin/node/add", (request, response) -> {
+		blade.get("/admin/node/add", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");
@@ -44,7 +47,7 @@ public class NodeRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.post("/admin/node/add", (request, response) -> {
+		blade.post("/admin/node/add", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");
@@ -81,7 +84,7 @@ public class NodeRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.get("/admin/node/edit/:nid", (request, response) -> {
+		blade.get("/admin/node/edit/:nid", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");
@@ -99,7 +102,7 @@ public class NodeRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.post("/admin/node/edit", (request, response) -> {
+		blade.post("/admin/node/edit", (request, response) -> {
 			User user = adminUser();
 			if(null == user || user.getGroup_id() == 3){
 				response.go("/signin");

@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.blade.annotation.Component;
+
 import bbs.Constant;
 import bbs.model.Topic;
 import bbs.model.User;
 import bbs.service.UserService;
-import blade.annotation.Component;
 import blade.kit.BeanKit;
 import blade.kit.EncrypKit;
 import blade.kit.MailKit;

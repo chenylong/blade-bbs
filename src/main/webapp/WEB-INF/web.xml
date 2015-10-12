@@ -6,15 +6,15 @@
 	<display-name>Archetype Created Web Application</display-name>
 
 	<filter>
-		<filter-name>BladeFilter</filter-name>
-		<filter-class>blade.BladeFilter</filter-class>
+		<filter-name>CoreFilter</filter-name>
+		<filter-class>com.blade.CoreFilter</filter-class>
 		<init-param>
 			<param-name>bootstrapClass</param-name>
 			<param-value>bbs.App</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
-		<filter-name>BladeFilter</filter-name>
+		<filter-name>CoreFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 

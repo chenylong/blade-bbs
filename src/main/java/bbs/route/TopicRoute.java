@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.Funcs;
 import bbs.model.Topic;
@@ -13,13 +17,10 @@ import bbs.service.NodeService;
 import bbs.service.OptionService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.DateKit;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 // 主页操作
 public class TopicRoute implements RouteBase{
@@ -41,13 +42,16 @@ public class TopicRoute implements RouteBase{
 	
 	@Override
 	public void run() {
-		Blade.get("/topic/add", (request, response) -> {
+		
+		Blade blade = Blade.me();
+		
+		blade.get("/topic/add", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("topic_add");
 			modelAndView.add("nodes", nodeService.getNodes(null, null));
 			return modelAndView;
 		});
 		
-		Blade.post("/topic/add", (request, response) -> {
+		blade.post("/topic/add", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -95,7 +99,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.get("/topic/edit/:tid", (request, response) -> {
+		blade.get("/topic/edit/:tid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -110,7 +114,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.get("/topic/edit/:tid", (request, response) -> {
+		blade.get("/topic/edit/:tid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -125,7 +129,7 @@ public class TopicRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.post("/topic/edit/:tid", (request, response) -> {
+		blade.post("/topic/edit/:tid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -171,7 +175,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.get("/topic/:tid", (request, response) -> {
+		blade.get("/topic/:tid", (request, response) -> {
 			Integer tid = request.pathParamToInt("tid");
 			if(null == tid){
 				response.go("/");
@@ -218,7 +222,7 @@ public class TopicRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.get("/topic/follow/:tid", (request, response) -> {
+		blade.get("/topic/follow/:tid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				String path = Funcs.base_url("/signin");
@@ -236,7 +240,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.get("/topic/unfollow/:tid", (request, response) -> {
+		blade.get("/topic/unfollow/:tid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -253,7 +257,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.get("/follow/topics", (request, response) -> {
+		blade.get("/follow/topics", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");

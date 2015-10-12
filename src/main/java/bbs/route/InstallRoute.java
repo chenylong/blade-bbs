@@ -1,8 +1,5 @@
 package bbs.route;
 
-import static blade.Blade.get;
-import static blade.Blade.post;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,22 +12,22 @@ import javax.sql.DataSource;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import com.alibaba.druid.pool.DruidDataSourceFactory;
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.kit.BBSKit;
 import bbs.model.User;
 import bbs.service.OptionService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.EncrypKit;
 import blade.kit.FileKit;
 import blade.kit.PropertyKit;
 import blade.kit.StringKit;
 import blade.kit.SystemKit;
 import blade.plugin.sql2o.Sql2oPlugin;
-import blade.render.ModelAndView;
-
-import com.alibaba.druid.pool.DruidDataSourceFactory;
 
 public class InstallRoute implements RouteBase {
 	
@@ -43,15 +40,17 @@ public class InstallRoute implements RouteBase {
 	@Override
 	public void run() {
 		
+		Blade blade = Blade.me();
+		
 		/**
 		 * 安装页面
 		 */
-		get("/install", (req, res) -> this.getInstallModelAndView("index"));
+		blade.get("/install", (req, res) -> this.getInstallModelAndView("index"));
 		
 		/**
 		 * 输入数据库步骤
 		 */
-		get("/install/process", (req, res) -> {
+		blade.get("/install/process", (req, res) -> {
 			String referer = req.header("Referer");
 			if(null == referer || referer.indexOf("/install/check") == -1){
 				res.go("/install");
@@ -63,7 +62,7 @@ public class InstallRoute implements RouteBase {
 		/**
 		 * 检查环境
 		 */
-		get("/install/check", (req, res) -> {
+		blade.get("/install/check", (req, res) -> {
 			
 			ModelAndView modelAndView = this.getInstallModelAndView("check");
 			
@@ -104,7 +103,7 @@ public class InstallRoute implements RouteBase {
 			environment.add(space);
 			
 			// 系统目录
-			String uploadPath = Blade.webRoot() + "" + Constant.UPLOAD_FOLDER;
+			String uploadPath = blade.webRoot() + "" + Constant.UPLOAD_FOLDER;
 			
 			try {
 				File file = FileKit.createTempFile("temp", ".txt", uploadPath);
@@ -124,7 +123,7 @@ public class InstallRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		get("/install/testdb", (req, res) -> {
+		blade.get("/install/testdb", (req, res) -> {
 			
 			String dbhost = req.query("dbhost");
 			String dbuser = req.query("dbuser");
@@ -162,7 +161,7 @@ public class InstallRoute implements RouteBase {
 		/**
 		 * 输入数据库步骤
 		 */
-		post("/install/process", (req, res) -> {
+		blade.post("/install/process", (req, res) -> {
 			
 			ModelAndView modelAndView = this.getInstallModelAndView("process");
 			String dbhost = req.query("dbhost");
@@ -237,7 +236,8 @@ public class InstallRoute implements RouteBase {
 				try {
 					Properties props = PropertyKit.getProperty("ds.properties");
 					DataSource dataSource = DruidDataSourceFactory.createDataSource(props);
-					Blade.plugin(Sql2oPlugin.class).config(dataSource).run();
+					Sql2oPlugin sql2oPlugin = blade.plugin(Sql2oPlugin.class);
+					sql2oPlugin.config(dataSource).run();
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}

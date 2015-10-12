@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.Funcs;
 import bbs.kit.BBSKit;
@@ -11,14 +15,11 @@ import bbs.model.User;
 import bbs.service.CommentService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.DateKit;
 import blade.kit.EncrypKit;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 public class UserRoute implements RouteBase {
 	
@@ -34,8 +35,10 @@ public class UserRoute implements RouteBase {
 	@Override
 	public void run() {
 		
+		Blade blade = Blade.me();
+		
 		// 用户设置
-		Blade.get("/settings", (request, response) -> {
+		blade.get("/settings", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -46,7 +49,7 @@ public class UserRoute implements RouteBase {
 		});
 		
 		// 会员详情
-		Blade.get("/member/:username", (request, response) -> {
+		blade.get("/member/:username", (request, response) -> {
 			String username = request.pathParam("username");
 			if(StringKit.isBlank(username)){
 				response.go("/");
@@ -94,7 +97,7 @@ public class UserRoute implements RouteBase {
 		});
 		
 		// 保存用户信息
-		Blade.post("/user/edit", (request, response) -> {
+		blade.post("/user/edit", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -202,7 +205,7 @@ public class UserRoute implements RouteBase {
 		});
 		
 		// 我关注的人
-		Blade.get("/follow/user", (request, response) -> {
+		blade.get("/follow/user", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				String path = Funcs.base_url("/signin");
@@ -226,7 +229,7 @@ public class UserRoute implements RouteBase {
 		});
 		
 		// 我关注的节点
-		Blade.get("/follow/nodes", (request, response) -> {
+		blade.get("/follow/nodes", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				String path = Funcs.base_url("/signin");
@@ -243,7 +246,7 @@ public class UserRoute implements RouteBase {
 			return modelAndView;
 		});
 		
-		Blade.get("/user/follow/:uid", (request, response) -> {
+		blade.get("/user/follow/:uid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				String path = Funcs.base_url("/signin");
@@ -261,7 +264,7 @@ public class UserRoute implements RouteBase {
 			return null;
 		});
 		
-		Blade.get("/user/unfollow/:uid", (request, response) -> {
+		blade.get("/user/unfollow/:uid", (request, response) -> {
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -281,7 +284,7 @@ public class UserRoute implements RouteBase {
 		/**
 		 * 签到
 		 */
-		Blade.post("/clock-in", (req, res) -> {
+		blade.post("/clock-in", (req, res) -> {
 			User user = verifySignin();
 			if(null == user){
 				res.go("/");

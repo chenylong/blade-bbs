@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.kit.BBSKit;
 import bbs.model.Code;
@@ -14,14 +18,11 @@ import bbs.service.NodeService;
 import bbs.service.OptionService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.DateKit;
 import blade.kit.EncrypKit;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 // 主页操作
 public class HomeRoute implements RouteBase{
@@ -44,7 +45,9 @@ public class HomeRoute implements RouteBase{
 	@Override
 	public void run() {
 		
-		Blade.get("/", (request, response) -> {
+		Blade blade = Blade.me();
+		
+		blade.get("/", (request, response) -> {
 			ModelAndView modelAndView = getFrontModelAndView("home");
 			Integer page = (null == request.queryToInt("page")) ? 1 : request.queryToInt("page");
 			List<Node> nodes = nodeService.getNodes(1, null);
@@ -79,7 +82,7 @@ public class HomeRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.get("/signin", (req, res) -> {
+		blade.get("/signin", (req, res) -> {
 			Date time = DateKit.getDateByUnixTime(DateKit.getCurrentUnixTime() - 86400*90);
 			WhereParam where = WhereParam.me().eq("a.status", 1).greaterThan("a.addtime", time);
 			List<Map<String, Object>> hot_topics = topicService.getTopicRecent(where, 1, 10, "view desc").getResults();
@@ -87,7 +90,8 @@ public class HomeRoute implements RouteBase{
 			modelAndView.add("hot_topics", hot_topics);
 			return modelAndView;
 		});
-		Blade.get("/signup", (req, res) -> {
+		
+		blade.get("/signup", (req, res) -> {
 			Date time = DateKit.getDateByUnixTime(DateKit.getCurrentUnixTime() - 86400*90);
 			WhereParam where = WhereParam.me().eq("a.status", 1).greaterThan("a.addtime", time);
 			List<Map<String, Object>> hot_topics = topicService.getTopicRecent(where, 1, 10, "view desc").getResults();
@@ -97,7 +101,7 @@ public class HomeRoute implements RouteBase{
 		});
 		
 		// 注册
-		Blade.post("/signup", (request, response) -> {
+		blade.post("/signup", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("signup");
 			String username = request.query("username");
 			String password = request.query("password");
@@ -169,7 +173,7 @@ public class HomeRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.get("/recent", (request, response) -> {
+		blade.get("/recent", (request, response) -> {
 			ModelAndView modelAndView = getFrontModelAndView("home");
 			Integer page = (null == request.queryToInt("page")) ? 1 : request.queryToInt("page");
 			List<Node> nodes = nodeService.getNodes(1, null);
@@ -193,11 +197,11 @@ public class HomeRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.get("/signin", (req, res) -> this.getFront("signin"));
-		Blade.get("/signup", (req, res) -> this.getFront("signup"));
+		blade.get("/signin", (req, res) -> this.getFront("signin"));
+		blade.get("/signup", (req, res) -> this.getFront("signup"));
 		
 		// 注册
-		Blade.post("/signup", (request, response) -> {
+		blade.post("/signup", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("signup");
 			String username = request.query("username");
 			String password = request.query("password");
@@ -270,7 +274,7 @@ public class HomeRoute implements RouteBase{
 		});
 		
 		// 登录
-		Blade.post("/signin", (request, response) -> {
+		blade.post("/signin", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("signin");
 			String username = request.query("username");
 			String password = request.query("password");
@@ -304,7 +308,7 @@ public class HomeRoute implements RouteBase{
 		});
 		
 		// 注销
-		Blade.get("/signout", (request, response) -> {
+		blade.get("/signout", (request, response) -> {
 			User user = request.session().attribute(Constant.LOGIN_SESSION);
 			if(null != user){
 				request.session().removeAttribute(Constant.LOGIN_SESSION);
@@ -314,7 +318,7 @@ public class HomeRoute implements RouteBase{
 		});
 		
 		// 激活邮件
-		Blade.get("/active", (request, response) -> {
+		blade.get("/active", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("active");
 			// 激活成功 更新注册会员数
 			String code = request.query("code");
@@ -343,7 +347,7 @@ public class HomeRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.get("/markdown", (request, response) -> {
+		blade.get("/markdown", (request, response) -> {
 			ModelAndView modelAndView = getFrontModelAndView("markdown");
 			return modelAndView;
 		});

@@ -3,18 +3,19 @@ package bbs.route;
 import java.util.List;
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.model.Node;
 import bbs.model.User;
 import bbs.service.NodeService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 
 public class NodeRoute implements RouteBase {
@@ -30,15 +31,16 @@ public class NodeRoute implements RouteBase {
 	
 	@Override
 	public void run() {
+		Blade blade = Blade.me();
 		
-		Blade.get("/node", (request, response) -> {
+		blade.get("/node", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("node");
 			List<Node> nodes = nodeService.getNodes(null, null);		
 			modelAndView.add("nodes", nodes);
 			return modelAndView;
 		});
 		
-		Blade.get("/go/:nkey", (request, response) -> {
+		blade.get("/go/:nkey", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("node_topic");
 			String nkey = request.pathParam("nkey");
 			if(StringKit.isBlank(nkey)){
@@ -76,7 +78,7 @@ public class NodeRoute implements RouteBase {
 		});
 		
 		// 收藏节点
-		Blade.get("/node/follow/:nkey", (request, response)->{
+		blade.get("/node/follow/:nkey", (request, response)->{
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -95,7 +97,7 @@ public class NodeRoute implements RouteBase {
 		});
 		
 		// 取消收藏节点
-		Blade.get("/node/follow/:nkey", (request, response)->{
+		blade.get("/node/follow/:nkey", (request, response)->{
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");

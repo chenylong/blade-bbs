@@ -3,6 +3,10 @@ package bbs.route.admin;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.model.User;
 import bbs.route.RouteBase;
 import bbs.service.CommentService;
@@ -10,10 +14,7 @@ import bbs.service.NodeService;
 import bbs.service.OptionService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.StringKit;
-import blade.render.ModelAndView;
 
 // 主页操作
 public class TopicRoute implements RouteBase{
@@ -35,7 +36,9 @@ public class TopicRoute implements RouteBase{
 	
 	@Override
 	public void run() {
-		Blade.get("/admin/topic/edit/:tid", (request, response) -> {
+		Blade blade = Blade.me();
+		
+		blade.get("/admin/topic/edit/:tid", (request, response) -> {
 			User user = adminUser();
 			if(null == user){
 				response.go("/");
@@ -50,7 +53,7 @@ public class TopicRoute implements RouteBase{
 			return modelAndView;
 		});
 		
-		Blade.post("/admin/topic/edit", (request, response) -> {
+		blade.post("/admin/topic/edit", (request, response) -> {
 			User user = adminUser();
 			if(null == user){
 				response.go("/");
@@ -99,7 +102,7 @@ public class TopicRoute implements RouteBase{
 			return null;
 		});
 		
-		Blade.get("/admin/topic/delete/:tid", (request, response) -> {
+		blade.get("/admin/topic/delete/:tid", (request, response) -> {
 			User user = adminUser();
 			if(null == user){
 				response.go("/");

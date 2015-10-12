@@ -6,6 +6,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.blade.Blade;
+import com.blade.annotation.Inject;
+import com.blade.render.ModelAndView;
+
 import bbs.Constant;
 import bbs.model.Topic;
 import bbs.model.User;
@@ -14,13 +18,10 @@ import bbs.service.NoticeService;
 import bbs.service.OptionService;
 import bbs.service.TopicService;
 import bbs.service.UserService;
-import blade.Blade;
-import blade.annotation.Inject;
 import blade.kit.DateKit;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Page;
 import blade.plugin.sql2o.WhereParam;
-import blade.render.ModelAndView;
 
 // 回复帖子
 public class CommentRoute implements RouteBase {
@@ -43,7 +44,9 @@ public class CommentRoute implements RouteBase {
 	@Override
 	public void run() {
 		
-		Blade.post("/comment/add", (request, response)->{
+		Blade blade = Blade.me();
+		
+		blade.post("/comment/add", (request, response)->{
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");
@@ -130,7 +133,7 @@ public class CommentRoute implements RouteBase {
 			return null;
 		});
 		
-		Blade.get("/notice", (request, response)->{
+		blade.get("/notice", (request, response)->{
 			User user = verifySignin();
 			if(null == user){
 				response.go("/");

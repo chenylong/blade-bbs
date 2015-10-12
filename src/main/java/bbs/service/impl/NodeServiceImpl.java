@@ -2,9 +2,10 @@ package bbs.service.impl;
 
 import java.util.List;
 
+import com.blade.annotation.Component;
+
 import bbs.model.Node;
 import bbs.service.NodeService;
-import blade.annotation.Component;
 import blade.kit.StringKit;
 import blade.plugin.sql2o.Model;
 
