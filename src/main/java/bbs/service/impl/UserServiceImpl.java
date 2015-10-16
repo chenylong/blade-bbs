@@ -68,7 +68,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User signin(String username, String password) {
 		String pwd = EncrypKit.md5(username + password);
-		return model.select().eq("username", username).eq("password", pwd).fetchOne();
+		return model.select().eq("username", username)
+				.eq("password", pwd).fetchOne();
 	}
 
 	@Override
