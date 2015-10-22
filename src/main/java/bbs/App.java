@@ -100,8 +100,6 @@ public class App extends Bootstrap {
 				Properties props = PropertyKit.getProperty("ds.properties");
 				DataSource dataSource = DruidDataSourceFactory.createDataSource(props);
 				Sql2oPlugin sql2oPlugin = blade.plugin(Sql2oPlugin.class);
-				sql2oPlugin.load("jdbc.properties").run();
-				sql2oPlugin.config("", "", "").run();;
 				sql2oPlugin.config(dataSource).run();
 			} catch (Exception ex) {
 				ex.printStackTrace();
