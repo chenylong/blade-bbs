@@ -42,7 +42,7 @@ public class NodeRoute implements RouteBase {
 		
 		blade.get("/go/:nkey", (request, response) -> {
 			ModelAndView modelAndView = this.getFrontModelAndView("node_topic");
-			String nkey = request.pathParam("nkey");
+			String nkey = request.param("nkey");
 			if(StringKit.isBlank(nkey)){
 				response.go("/");
 				return null;
@@ -84,7 +84,7 @@ public class NodeRoute implements RouteBase {
 				response.go("/");
 				return null;
 			}
-			String nkey = request.pathParam("nkey");
+			String nkey = request.param("nkey");
 			if(StringKit.isBlank(nkey)){
 				return null;
 			}
@@ -103,7 +103,7 @@ public class NodeRoute implements RouteBase {
 				response.go("/");
 				return null;
 			}
-			String nkey = request.pathParam("nkey");
+			String nkey = request.param("nkey");
 			if(StringKit.isBlank(nkey)){
 				return null;
 			}

@@ -106,7 +106,7 @@ public class TopicRoute implements RouteBase{
 				return null;
 			}
 			
-			Integer tid = request.pathParamToInt("tid");
+			Integer tid = request.paramToInt("tid");
 			Map<String, Object> topicMap = topicService.getMap(tid);
 			ModelAndView modelAndView = this.getFrontModelAndView("topic_edit");
 			modelAndView.add("nodes", nodeService.getNodes(null, null));
@@ -121,7 +121,7 @@ public class TopicRoute implements RouteBase{
 				return null;
 			}
 			
-			Integer tid = request.pathParamToInt("tid");
+			Integer tid = request.paramToInt("tid");
 			Map<String, Object> topicMap = topicService.getMap(tid);
 			ModelAndView modelAndView = this.getFrontModelAndView("topic_edit");
 			modelAndView.add("nodes", nodeService.getNodes(null, null));
@@ -136,7 +136,7 @@ public class TopicRoute implements RouteBase{
 				return null;
 			}
 			
-			Integer tid = request.pathParamToInt("tid");
+			Integer tid = request.paramToInt("tid");
 			Map<String, Object> topicMap = topicService.getMap(tid);
 			ModelAndView modelAndView = this.getFrontModelAndView("topic_edit");
 			modelAndView.add("nodes", nodeService.getNodes(null, null));
@@ -176,7 +176,7 @@ public class TopicRoute implements RouteBase{
 		});
 		
 		blade.get("/topic/:tid", (request, response) -> {
-			Integer tid = request.pathParamToInt("tid");
+			Integer tid = request.paramToInt("tid");
 			if(null == tid){
 				response.go("/");
 				return null;
@@ -229,7 +229,7 @@ public class TopicRoute implements RouteBase{
 				response.html("<script>alert('请登录后进行收藏！');location.href='"+ path +"';</script>");
 				return null;
 			}
-			Integer tid = request.pathParamToInt("tid");
+			Integer tid = request.paramToInt("tid");
 			if(null != tid){
 				userService.follow(user.getUid(), tid, "topic");
 			}
@@ -246,7 +246,7 @@ public class TopicRoute implements RouteBase{
 				response.go("/");
 				return null;
 			}
-			Integer tid = request.pathParamToInt("tid");
+			Integer tid = request.paramToInt("tid");
 			if(null != tid){
 				userService.unfollow(user.getUid(), tid, "topic");
 			}

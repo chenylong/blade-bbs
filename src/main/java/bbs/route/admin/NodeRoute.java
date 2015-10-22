@@ -90,7 +90,7 @@ public class NodeRoute implements RouteBase {
 				response.go("/signin");
 				return null;
 			}
-			Integer nid = request.pathParamToInt("nid");
+			Integer nid = request.paramToInt("nid");
 			
 			ModelAndView modelAndView = getAdminModelAndView("node_edit");
 			

@@ -80,7 +80,7 @@ public class UserRoute implements RouteBase {
 			}
 			
 			ModelAndView modelAndView = this.getAdminModelAndView("user_edit");
-			Integer uid = request.pathParamToInt("uid");
+			Integer uid = request.paramToInt("uid");
 			User user = userService.getByUID(uid);
 			modelAndView.add("user", user);
 			return modelAndView;

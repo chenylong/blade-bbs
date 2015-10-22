@@ -50,7 +50,7 @@ public class UserRoute implements RouteBase {
 		
 		// 会员详情
 		blade.get("/member/:username", (request, response) -> {
-			String username = request.pathParam("username");
+			String username = request.param("username");
 			if(StringKit.isBlank(username)){
 				response.go("/");
 				return null;
@@ -253,7 +253,7 @@ public class UserRoute implements RouteBase {
 				response.html("<script>alert('请登录后进行操作！');location.href='"+ path +"';</script>");
 				return null;
 			}
-			Integer uid = request.pathParamToInt("uid");
+			Integer uid = request.paramToInt("uid");
 			if(null != uid){
 				userService.follow(user.getUid(), uid, "user");
 			}
@@ -270,7 +270,7 @@ public class UserRoute implements RouteBase {
 				response.go("/");
 				return null;
 			}
-			Integer uid = request.pathParamToInt("uid");
+			Integer uid = request.paramToInt("uid");
 			if(null != uid){
 				userService.unfollow(user.getUid(), uid, "user");
 			}
