@@ -176,7 +176,7 @@ public class InstallRoute implements RouteBase {
 					dbhost += ":3306";
 				}
 				String pwd = EncrypKit.md5(username + password);
-				String url = "jdbc:mysql://" + dbhost + "/" + dbname;
+				String url = "jdbc:mysql://" + dbhost + "/" + dbname + "?useUnicode=true&characterEncoding=utf-8";
 				
 				Sql2o sql2o = new Sql2o(url, dbuser, dbpsw);
 				Connection connection = sql2o.open();
