@@ -16,7 +16,7 @@ import blade.kit.DateKit;
 import blade.kit.FileKit;
 import blade.kit.IOKit;
 import blade.kit.StringKit;
-import blade.kit.json.JSONObject;
+import blade.kit.json.JsonObject;
 
 public class UploadRoute implements RouteBase {
 
@@ -51,22 +51,21 @@ public class UploadRoute implements RouteBase {
 				
 				IOKit.write(fileItem.getFileContent(), file);
 				
-				JSONObject jsonObject = new JSONObject();
+				JsonObject jsonObject = new JsonObject();
 				
 				if(file.exists()){
 					
-					String prfix = request.url().replaceFirst(request.servletPath(), "/");
 					String filePath = Constant.UPLOAD_FOLDER + "/" + saveName;
 					String url = Constant.CDN_SITE + "/" + filePath;
 					
-					jsonObject.put("success", 1);
-					jsonObject.put("message", "上传成功");
-					jsonObject.put("filename", fileItem.getFileName());
-					jsonObject.put("filepath", filePath);
-					jsonObject.put("url", url);
+					jsonObject.add("success", 1);
+					jsonObject.add("message", "上传成功");
+					jsonObject.add("filename", fileItem.getFileName());
+					jsonObject.add("filepath", filePath);
+					jsonObject.add("url", url);
 				} else {
-					jsonObject.put("success", 0);
-					jsonObject.put("message", "上传失败");
+					jsonObject.add("success", 0);
+					jsonObject.add("message", "上传失败");
 				}
 				
 				response.json(jsonObject.toString());
@@ -118,7 +117,7 @@ public class UploadRoute implements RouteBase {
 				
 				IOKit.write(fileItem.getFileContent(), file);
 				
-				JSONObject jsonObject = new JSONObject();
+				JsonObject jsonObject = new JsonObject();
 				
 				if(file.exists()){
 					try {
@@ -129,19 +128,19 @@ public class UploadRoute implements RouteBase {
 						
 						String url = Constant.CDN_SITE + "/" + normalName;
 						
-						jsonObject.put("id", saveName);
-						jsonObject.put("normal", normalName);
-						jsonObject.put("url", url);
-						jsonObject.put("success", 1);
-						jsonObject.put("message", "上传成功");
+						jsonObject.add("id", saveName);
+						jsonObject.add("normal", normalName);
+						jsonObject.add("url", url);
+						jsonObject.add("success", 1);
+						jsonObject.add("message", "上传成功");
 						
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 					
 				} else {
-					jsonObject.put("success", 0);
-					jsonObject.put("message", "上传失败");
+					jsonObject.add("success", 0);
+					jsonObject.add("message", "上传失败");
 				}
 				
 				response.json(jsonObject.toString());
