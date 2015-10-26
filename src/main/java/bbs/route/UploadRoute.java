@@ -122,7 +122,7 @@ public class UploadRoute implements RouteBase {
 				if(file.exists()){
 					try {
 						// 如果原图宽度<200则原图=缩略图
-						if(!ImageKit.resize(file, new File(normalpath), 200, 0.9f)){
+						if(null != ImageKit.zoom(savepath, normalpath, 200, 200)){
 							FileKit.copy(file.getPath(), normalpath);
 						}
 						
