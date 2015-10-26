@@ -30,7 +30,9 @@
                                     <select class="form-control" id="pid" name="pid">
                                       <option value="0">无</option>
                                       #for(item : nodes)
+                                      #if(item.nid != node.nid)
                                       <option #if(item.nid == node.pid) selected="selected" #end value="${item.nid}">${item.nname}</option>
+                                      #end
                                       #end
                                     </select>
                                 </div>
