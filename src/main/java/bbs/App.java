@@ -64,13 +64,25 @@ public class App extends Bootstrap {
 		blade.load(OptionsRoute.class);
 		
 		blade.before("/*", new RouteHandler() {
-			@Override
+			
+			@SuppressWarnings("unused")
 			public Object handler(Request request, Response response) {
 				if(!BBSKit.isInstall() && request.uri().indexOf("/install") == -1){
 					return request.invoke("/install");
 				}
 				request.attribute("cdn", Constant.CDN_SITE);
 				request.attribute("version", "1.0");
+				System.out.println("1111111111111111111111111");
+				return request.invoke();
+			}
+
+			public Object handle(Request request, Response response) {
+				if(!BBSKit.isInstall() && request.uri().indexOf("/install") == -1){
+					return request.invoke("/install");
+				}
+				request.attribute("cdn", Constant.CDN_SITE);
+				request.attribute("version", "1.0");
+				System.out.println("222222222222222222");
 				return request.invoke();
 			}
 		});
