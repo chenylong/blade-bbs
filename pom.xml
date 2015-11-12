@@ -129,8 +129,39 @@
 							<maxIdleTime>30000</maxIdleTime>
 						</connector>
 					</connectors>
-				</configuration>
-			</plugin>
+					 <reload>automatic</reload>
+   
+    <systemProperties>
+      <systemProperty>
+        <name>org.mortbay.util.URI.charset</name>
+        <value>UTF-8</value>
+      </systemProperty>
+    </systemProperties>
+    <jvmArgs>-Xmx512m -XX:PermSize=128m -XX:MaxPermSize=256m
+      -Dfile.encoding=UTF-8</jvmArgs>
+  </configuration>
+  <executions>
+    <execution>
+      <id>start-jetty</id>
+      <phase>pre-integration-test</phase>
+      <goals>
+        <goal>run</goal>
+      </goals>
+      <configuration>
+        <scanIntervalSeconds>3</scanIntervalSeconds>
+        <daemon>true</daemon>
+      </configuration>
+    </execution>
+    <execution>
+      <id>stop-jetty</id>
+      <phase>post-integration-test</phase>
+      <goals>
+        <goal>stop</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+
 		</plugins>
 	</build>
 </project>

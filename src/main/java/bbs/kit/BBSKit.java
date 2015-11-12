@@ -44,7 +44,7 @@ public class BBSKit {
 	}
 
 	public static boolean isImage(String suffix) {
-		if (suffix.endsWith(".png") || suffix.endsWith(".jpg") || suffix.endsWith(".jpeg") || suffix.endsWith(".bmp")) {
+		if (suffix.endsWith(".png") || suffix.endsWith(".jpg") || suffix.endsWith(".jpeg") || suffix.endsWith(".bmp")|| suffix.endsWith(".JPG")) {
 			return true;
 		}
 		return false;

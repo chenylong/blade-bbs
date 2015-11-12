@@ -113,6 +113,8 @@ public class UploadRoute implements RouteBase {
 				
 				String normalpath = blade.webRoot() + File.separator + normalName;
 				
+				System.out.println(normalpath);
+				
 				File file = new File(savepath);
 				
 				IOKit.write(fileItem.getFileContent(), file);

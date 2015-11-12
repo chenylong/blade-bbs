@@ -56,7 +56,7 @@
                                 <label for="keywords" class="col-sm-2 control-label">上传图标</label>
                                 <div class="col-sm-10">
                                 	<input type="hidden" name="img" id="node_img" />
-                                	<img id="upload_img" src="${cdn}/static/img/favicon.png" width="73" height="73" onclick="doUpload()" style="cursor: pointer;"/>
+                                	<img id="upload_img" src="${cdn}/static/img/favicon.png" width="73" height="73" onclick="doUploada()" style="cursor: pointer;"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -87,7 +87,9 @@
 <script type="text/javascript" src="${cdn}/static/js/jquery.upload.js"></script>
 <script type="text/javascript">
 //上传方法
-function doUpload() {
+function doUploada() {
+  alert("upload")
+   alert("${base_url('/uploadimg')}");
 	// 上传方法
 	$.upload({
 		// 上传地址
@@ -102,10 +104,14 @@ function doUpload() {
 		},
 		// 上传之后回调
 		onComplate: function(data) {
+		    var dc = data;
+		    alert(dc)
 			if(data){
 				$("#upload_img").attr('src', data.url);
 				$("#node_img").val(data.normal);
 			}
+		
+		return true;
 		}
 	});
 }
